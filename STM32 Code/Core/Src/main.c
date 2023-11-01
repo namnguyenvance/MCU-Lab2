@@ -234,6 +234,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		counter--;
 		if (counter <= 0) {
 			changeState();
+			index_led++;
+			if (index_led > 3) index_led = 0;
 			counter = 50;
 		}
 	}
