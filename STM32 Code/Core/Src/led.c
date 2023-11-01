@@ -11,7 +11,7 @@ int state = 0;
 
 /* buffer variable */
 const int MAX_LED = 4;
-int index_led = 3;
+int index_led = 0;
 int led_buffer[4] = {1 , 2 , 3 , 4};
 
 void display7SEG(int num) {
@@ -146,11 +146,13 @@ void changeState() {
 			HAL_GPIO_TogglePin(GPIOA, EN2_Pin | EN3_Pin);
 			clear7SEG();
 			display7SEG(led_buffer[3]);
+			break;
 		case 4:
 			state = 1;
 			HAL_GPIO_TogglePin(GPIOA, EN3_Pin | EN0_Pin);
 			clear7SEG();
 			display7SEG(led_buffer[0]);
+			break;
 		default:
 			break;
 	}

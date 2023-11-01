@@ -2,4 +2,4 @@ led.c:17:6:display7SEG	16	static
 led.c:116:6:clear7SEG	8	static
 led.c:120:6:blinkLED	8	static
 led.c:124:6:changeState	8	static
-led.c:159:6:update7SEG	16	static
+led.c:161:6:update7SEG	16	static
