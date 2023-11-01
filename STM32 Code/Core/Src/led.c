@@ -9,10 +9,13 @@
 
 int state = 0;
 
-/* buffer variable */
+// buffer variable
 const int MAX_LED = 4;
 int index_led = 0;
 int led_buffer[4] = {1 , 2 , 3 , 4};
+
+// clock variable
+int hour = 6, minute = 50, second = 8;
 
 void display7SEG(int num) {
 	if (num >= 0 && num < 10) {
@@ -75,10 +78,10 @@ void display7SEG(int num) {
 	  		HAL_GPIO_WritePin(SEG0_GPIO_Port, SEG0_Pin, RESET);
 	  		HAL_GPIO_WritePin(SEG1_GPIO_Port, SEG1_Pin, SET);
 	  		HAL_GPIO_WritePin(SEG2_GPIO_Port, SEG2_Pin, RESET);
-	  		HAL_GPIO_WritePin(SEG3_GPIO_Port, SEG3_Pin, SET);
-	  		HAL_GPIO_WritePin(SEG4_GPIO_Port, SEG4_Pin, SET);
-	  		HAL_GPIO_WritePin(SEG5_GPIO_Port, SEG5_Pin, SET);
-	  		HAL_GPIO_WritePin(SEG6_GPIO_Port, SEG6_Pin, SET);
+	  		HAL_GPIO_WritePin(SEG3_GPIO_Port, SEG3_Pin, RESET);
+	  		HAL_GPIO_WritePin(SEG4_GPIO_Port, SEG4_Pin, RESET);
+	  		HAL_GPIO_WritePin(SEG5_GPIO_Port, SEG5_Pin, RESET);
+	  		HAL_GPIO_WritePin(SEG6_GPIO_Port, SEG6_Pin, RESET);
 	  		break;
 		case 7:
 	  		HAL_GPIO_WritePin(SEG0_GPIO_Port, SEG0_Pin, RESET);
@@ -175,4 +178,12 @@ void update7SEG(int index) {
 		default:
 			break;
 	}
+}
+
+void updateClockBuffer()
+{
+	led_buffer[0] = hour / 10;
+	led_buffer[1] = hour % 10;
+	led_buffer[2] = minute / 10;
+	led_buffer[3] = minute % 10;
 }
