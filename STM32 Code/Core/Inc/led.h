@@ -16,5 +16,5 @@ void clear7SEG();
 void display7SEG(int num);
 void blinkLED();
 void changeState();
-
+void update7SEG(int index);
 #endif /* SRC_LED_H_ */
