@@ -1,6 +1,9 @@
 led.c:20:6:display7SEG	16	static
 led.c:119:6:clear7SEG	8	static
-led.c:123:6:blinkLED	8	static
-led.c:127:6:changeState	8	static
-led.c:164:6:update7SEG	16	static
-led.c:183:6:updateClockBuffer	4	static
+led.c:123:6:initState	4	static
+led.c:127:6:setState	16	static
+led.c:146:6:clearState	8	static
+led.c:150:6:blinkLED	8	static
+led.c:155:6:displayClock	16	static
+led.c:188:6:update7SEG	16	static
+led.c:219:6:updateClockBuffer	4	static

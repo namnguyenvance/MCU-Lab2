@@ -120,60 +120,96 @@ void clear7SEG() {
 	HAL_GPIO_WritePin(GPIOB, SEG0_Pin | SEG1_Pin | SEG2_Pin | SEG3_Pin | SEG4_Pin | SEG5_Pin | SEG6_Pin, 1);
 }
 
-void blinkLED() {
-	HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin | DOT_Pin);
+void initState() {
+	state = 0;
 }
 
-void changeState() {
-	switch (state) {
+void setState(int state) {
+	switch(state) {
 		case 0:
-			state = 1;
-			HAL_GPIO_TogglePin(GPIOA, EN0_Pin);
-			clear7SEG();
-			display7SEG(led_buffer[0]);
+			HAL_GPIO_WritePin(GPIOA, EN0_Pin, 0);
 			break;
 		case 1:
-			state = 2;
-			HAL_GPIO_TogglePin(GPIOA, EN0_Pin | EN1_Pin);
-			clear7SEG();
-			display7SEG(led_buffer[1]);
+			HAL_GPIO_WritePin(GPIOA, EN1_Pin, 0);
 			break;
 		case 2:
-			state = 3;
-			HAL_GPIO_TogglePin(GPIOA, EN1_Pin | EN2_Pin);
-			clear7SEG();
-			display7SEG(led_buffer[2]);
+			HAL_GPIO_WritePin(GPIOA, EN2_Pin, 0);
 			break;
 		case 3:
-			state = 4;
-			HAL_GPIO_TogglePin(GPIOA, EN2_Pin | EN3_Pin);
-			clear7SEG();
-			display7SEG(led_buffer[3]);
-			break;
-		case 4:
-			state = 1;
-			HAL_GPIO_TogglePin(GPIOA, EN3_Pin | EN0_Pin);
-			clear7SEG();
-			display7SEG(led_buffer[0]);
+			HAL_GPIO_WritePin(GPIOA, EN3_Pin, 0);
 			break;
 		default:
 			break;
 	}
 }
 
-void update7SEG(int index) {
-	switch (index) {
+void clearState() {
+	HAL_GPIO_WritePin(GPIOA, EN0_Pin | EN1_Pin | EN2_Pin | EN3_Pin, 1);
+}
+
+void blinkLED() {
+	HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin | DOT_Pin);
+}
+
+
+void displayClock(int hour, int minute) {
+	switch (state) {
 		case 0:
-			changeState();
+			clearState();
+			clear7SEG();
+			setState(state);
+			display7SEG(hour / 10);
+			state++;
 			break;
 		case 1:
-			changeState();
+			clearState();
+			clear7SEG();
+			setState(state);
+			display7SEG(hour % 10);
+			state++;
 			break;
 		case 2:
-			changeState();
+			clearState();
+			clear7SEG();
+			setState(state);
+			display7SEG(minute / 10);
+			state++;
+			break;
+		default:
+			clearState();
+			clear7SEG();
+			setState(state);
+			display7SEG(minute % 10);
+			state = 0;
+			break;
+	}
+}
+
+void update7SEG(int index) {
+	switch(index) {
+		case 0:
+			clearState();
+			clear7SEG();
+			setState(index);
+			display7SEG(led_buffer[index]);
+			break;
+		case 1:
+			clearState();
+			clear7SEG();
+			setState(index);
+			display7SEG(led_buffer[index]);
+			break;
+		case 2:
+			clearState();
+			clear7SEG();
+			setState(index);
+			display7SEG(led_buffer[index]);
 			break;
 		case 3:
-			changeState();
+			clearState();
+			clear7SEG();
+			setState(index);
+			display7SEG(led_buffer[index]);
 			break;
 		default:
 			break;

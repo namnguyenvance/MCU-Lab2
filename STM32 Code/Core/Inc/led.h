@@ -16,11 +16,14 @@ extern int index_led;
 extern int led_buffer[4];
 extern int hour, minute, second;
 
+void initState();
+void clearState();
+void setState();
 void clear7SEG();
 void display7SEG(int num);
+void displayClock(int hour, int minute);
 void blinkLED();
 void changeState();
-void update7SEG(int index);
 void updateClockBuffer();
 
 #endif /* SRC_LED_H_ */
