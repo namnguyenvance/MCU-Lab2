@@ -8,11 +8,10 @@
 #ifndef INC_TIMER_H_
 #define INC_TIMER_H_
 
-extern int state_flag;
-extern int LED_flag;
+extern int timer_flag;
+extern int clock_timer;
 
-void setTimerState(int duration);
-void setTimerLED(int duration);
+void setTimer(int duration);
 void timerRun();
 
 #endif /* INC_TIMER_H_ */
