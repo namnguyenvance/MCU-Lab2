@@ -113,7 +113,7 @@ void clear7SEG() {
 }
 
 void blinkLED() {
-	HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+	HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin | DOT_Pin);
 }
 
 void changeState() {
@@ -131,11 +131,21 @@ void changeState() {
 			display7SEG(2);
 			break;
 		case 2:
+			state = 3;
+			HAL_GPIO_TogglePin(GPIOA, EN1_Pin | EN2_Pin);
+			clear7SEG();
+			display7SEG(3);
+			break;
+		case 3:
+			state = 4;
+			HAL_GPIO_TogglePin(GPIOA, EN2_Pin | EN3_Pin);
+			clear7SEG();
+			display7SEG(0);
+		case 4:
 			state = 1;
-			HAL_GPIO_TogglePin(GPIOA, EN0_Pin | EN1_Pin);
+			HAL_GPIO_TogglePin(GPIOA, EN3_Pin | EN0_Pin);
 			clear7SEG();
 			display7SEG(1);
-			break;
 		default:
 			break;
 	}
