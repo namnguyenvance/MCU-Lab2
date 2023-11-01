@@ -1,0 +1,3 @@
+timer.c:15:6:setTimerState	16	static
+timer.c:19:6:setTimerLED	16	static
+timer.c:23:6:timerRun	4	static

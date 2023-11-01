@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "led.h"
-#include "hardware_control.h"
+#include "timer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,7 +57,19 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int timer0_counter = 0;
+int timer0_flag = 0;
+int TIMER_CYCLE = 10;
+void setTimer0(int duration){
+	timer0_counter = duration / TIMER_CYCLE ;
+	timer0_flag = 0;
+}
+void timer_run(){
+	if (timer0_counter > 0) {
+		timer0_counter--;
+		if (timer0_counter == 0) timer0_flag = 1;
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -91,7 +103,7 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
-  initGPIO();
+  setTimer0(10);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -99,20 +111,10 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  second++;
-	  if(second >= 60) {
-		  second = 0;
-	      minute++;
+	  if (timer0_flag == 1) {
+		  HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+		  setTimer0(2000);
 	  }
-	  if(minute >= 60) {
-	      minute = 0;
-	      hour++;
-	  }
-	  if(hour >= 24) {
-	      hour = 0;
-	  }
-	  updateClockBuffer();
-	  HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -243,22 +245,7 @@ static void MX_GPIO_Init(void)
 int counter = 25;
 int led_counter = 100;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	if (counter > 0) {
-		counter--;
-		if (counter <= 0) {
-			changeState();
-			index_led++;
-			if (index_led > 3) index_led = 0;
-			counter = 25;
-		}
-	}
-	if (led_counter > 0) {
-		led_counter--;
-		if (led_counter <= 0) {
-			led_counter = 100;
-			blinkLED();
-		}
-	}
+	timer_run();
 }
 /* USER CODE END 4 */
 
