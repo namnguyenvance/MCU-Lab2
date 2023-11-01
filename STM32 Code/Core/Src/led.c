@@ -141,11 +141,13 @@ void changeState() {
 			HAL_GPIO_TogglePin(GPIOA, EN2_Pin | EN3_Pin);
 			clear7SEG();
 			display7SEG(0);
+			break;
 		case 4:
 			state = 1;
 			HAL_GPIO_TogglePin(GPIOA, EN3_Pin | EN0_Pin);
 			clear7SEG();
 			display7SEG(1);
+			break;
 		default:
 			break;
 	}
